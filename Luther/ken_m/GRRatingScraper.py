@@ -1,12 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 import time
-from IMDBRatingScraper import scrapeSearchMultiPages
 import urllib.parse
 from collections import defaultdict
 import pandas as pd
 
-key = 'OvwVfE5FFyCu0IpiwxWGVQ'
+key = ''
 search_key = 'https://www.goodreads.com/search/index.xml?key=' + key + '&q='
 
 movies_based_on_books = 'http://www.imdb.com/search/keyword?keywords= \
@@ -38,10 +37,10 @@ def getBookData(movie_book_list, key=key, search_key=search_key):
             movie_book_ratings.append(rating)
             movie_book_ratings_counts.append(rating_count)
             got_books += 1
-            print('Got {} books'.format(str(got_books)))
+            #print('Got {} books'.format(str(got_books)))
         else:
             missed_books += 1
-            print('Missed {} books'.format(str(missed_books)))
+            #print('Missed {} books'.format(str(missed_books)))
         
         time.sleep(1)
             
