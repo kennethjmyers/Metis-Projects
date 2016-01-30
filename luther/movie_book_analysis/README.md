@@ -1,4 +1,20 @@
-Condensed files from Project 2 (Luther)
+This repo contains my files from the second Metis project. The code is written in the *.py files and executed in the *.ipynb files.
+
+
+[MojoScraper.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/MojoScraper.py) scrapes Box Office Mojo using BS4
+
+[IMDBRatingScraper.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/IMDBRatingScraper.py) scrapes IMDB using BS4
+
+[GRRatingScraper.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/GRRatingScraper.py) scrapes GoodReads using their API and BS4
+
+[MCRatingScraper.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/MCRatingScraper.py) scrapes MetaCritic using the Selenium
+
+[MovieBookAnalysis.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/MovieBookAnalysis.py) Uses various plotting and analysis libraries to analyze the data
+
+[CrossValidation.py](https://github.com/kennmyers/Metis-Projects/blob/master/luther/movie_book_analysis/CrossValidation.py)  Uses mostly Sci Kit Learn to cross validate different regression models of the data
+
+
+Please note that in order to scrape MetaCritic using my method, you will need to download the [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/) and save it to a a directory named '~/Downloads/KEEP' or specify a different location in the MCRatingScraper.py file. You will also need to download the [AdBlockPlus extension](https://chrome.google.com/webstore/detail/adblock-plus/cfhdojbkjhnklbpkdaibdccddilifddb?hl=en-US) (you can use the [Chrome Extension Downloader](http://chrome-extension-downloader.com/)) or a similar Ad Blocker to scrape MetaCritic with selenium (alternatively you could scrape MC with their API). The ad block extension should be stored in this directory and specified in MCRatingScraper.py. 
 
 
 Place holder to [blogpost]().
