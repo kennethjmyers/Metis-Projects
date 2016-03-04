@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>jQuery UI Autocomplete - Remote datasource</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="http://mpld3.github.io/js/mpld3.v0.2.js"></script>
+        <script type="text/javascript" src="http://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.css">
+
+        <script>
+            /*** Series Input ***/
+            $(function() {
+                function log( message ) {
+                    $( "<div>" ).text( message ).prependTo( "#log" );
+                    $( "#log" ).scrollTop( 0 );
+                }
+                    var array = {{titles|safe}}
+
+                    $('#anime').autocomplete({
+                      source: array,
+                      minLength: 2
+                });
+
+            });
+
+            /*** Recommendations Slider ***/
+            $(function() {
+                $( "#slider1" ).slider({
+                    value:10,
+                    min: 0,
+                    max: 20,
+                    step: 1,
+                    slide: function( event, ui ) {
+                        $( "#rec_num" ).val( ui.value );
+                    }
+                });
+
+                $( "#rec_num" ).val( $( "#slider1" ).slider( "value" ) );
+            });
+
+            $(function() {
+                $('#submit').click(function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "/data",
+                        contentType: "application/json",
+                        dataType: "JSON",
+                        async: true,
+                        data: JSON.stringify({
+                            series: $("#anime").val(),
+                            rec_num: $("#rec_num").val(),
+                            cluster_option: $("#cluster_types").is(':checked')
+                        }),
+                        success: function(response) {
+                            //split the response on the script tags
+
+                            html = response['html'];
+                            json_data = response['json'];
+                            console.log(json_data);
+                            var split_html = html.split(/(<script>|<\/script>)/);
+                            console.log(split_html);
+                            document.getElementById('fig01').innerHTML = split_html[0];
+                            //evaluate the script passed in
+                            eval(split_html[2]);
+                            console.log(response);
+
+                            var $input = $('<div class="button_div"><button type="button" name="load_list" id="load_list" onclick="load_list(json_data)">But wait, there\'s more!</button></div>');
+                            $input.appendTo(document.getElementById('fig01'));
+
+                            $('html, body').stop(true, false).animate({
+                                scrollTop: $("#fig01").offset().top
+                            }, 1500);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            });
+
+
+            // Clear Inside of fig01 when button pressed
+            function clearBoxes() {
+                document.getElementById('fig01').innerHTML = "";
+                document.getElementById('anime_list').innerHTML = "";
+                document.getElementById('suplex_city').innerHTML = "";
+            }
+
+            //On click button for 'but wait theres more'
+            function load_list(json) {
+                var parsed_json = JSON.parse(json);
+                //console.log(parsed_json);
+                var $init_table = $('<table class="anime_table">'+
+                                        '<tbody id="table_body">'+
+                                            '<tr class="table-header">'+
+                                                '<td class="image">Image</td>'+
+                                                '<td class="details">Details</td>'+
+                                                '<td class="synopsis">Synopsis</td>'+
+                                                '<td class="cluster_num">Cluster '+
+                                                    '<div id="question">'+
+                                                        '<i id="question_icon" class="fa fa-question-circle">'+
+                                                        '</i>'+
+                                                        '<div class="tooltiptext">'+
+                                                            'Clusters are grouped according to the following:</br>'+
+                                                            '0: earth, space, planet, alien, pilot</br>'+
+                                                            '1: father, family, mother, live, life</br>'+
+                                                            '2: world, mysterious, girl, know, power</br>'+
+                                                            '3: school, high, high school, student, girls</br>'+
+                                                            '4: love, girl, fall love, fall, day</br>'+
+                                                            '5: make, girl, work, come, time</br>'+
+                                                            '6: music, song, single, band, produce</br>'+
+                                                            '7: power, war, fight, city, battle</br>'+
+                                                            '8: team, match, play, girls, join</br>'+
+                                                        '</div>'+
+                                                    '</div>'+
+                                                '</td>'+
+                                            '</tr>'+
+                                        '</tbody>'+
+                                    '</table>');
+                $init_table.appendTo(document.getElementById('anime_list'));
+
+                //attach qtip
+                $('i').each(function() {
+                    $(this).qtip({
+                        content: {
+                            text: $(this).next('.tooltiptext')
+                        }
+                    });
+                });
+
+
+                $.each(parsed_json, function(i, item) {
+                    console.log(item['title'])
+                    var $row_item = $('<tr class="series_info">'+
+                                        '<td class="image_td">'+
+                                            '<a href="http://myanimelist.net/anime/'+item['id']+'">'+
+                                                '<img class="series_image" src="'+item["image"]+'">'+
+                                            '</a>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<div class="details">'+
+                                                '<div class="title_detail">'+
+                                                    '<a href="http://myanimelist.net/anime/'+item['id']+'">'+
+                                                        item["title"]+
+                                                    '</a>'+
+                                                '</div>'+
+                                                '<div class="other_details">'+
+                                                    //'</br>'+
+                                                    'English: '+item["english"]+
+                                                    '</br>'+
+                                                    'Premier: '+item["start_date"]+
+                                                    '</br>'+
+                                                    'Type: '+item["type"]+
+                                                    '</br>'+
+                                                    'Episodes: '+item["episodes"]+
+                                                    '</br>'+
+                                                    'Score: '+item["score"]+
+                                                '</div>'+
+                                            '</div>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<div class="synopsis">'+
+                                                item["synopsis"].substring(0,250)+'...'+
+                                            '</div>'+
+                                        '</td>'+
+                                        '<td>'+
+                                            '<div class="cluster_detail">'+
+                                                item["clusters"]+
+                                            '</div>'+
+                                      '</tr>');
+
+                    $row_item.appendTo(document.getElementById('table_body'));
+
+                });
+
+                var $suplexcity = $('<div class="button_div"><button type="button" name="suplex_city_button" id="suplexcitybutton" onclick="suplexCity()">Take me to Suplex City</button></div>');
+                $suplexcity.appendTo(document.getElementById('anime_list'));
+
+                $('html, body').stop(true, false).animate({
+                    scrollTop: $("#anime_list").offset().top
+                }, 1500);
+            }
+
+            function suplexCity() {
+                var $suplexbear = $('<img id="bear" src="http://i.imgur.com/azeuNJ4.gif">')
+                $suplexbear.appendTo(document.getElementById('suplex_city'))
+
+                $('html, body').stop(true, false).animate({
+                    scrollTop: $("#suplex_city").offset().top
+                }, 1500);
+            }
+
+        </script>
+        <style>
+            html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0 auto;
+            }
+
+            h1 {
+                text-align: center;
+                font-size: 3em;
+                color: #666699;
+                font-family: Verdana,Arial,sans-serif;
+            }
+
+            #intro {
+                text-align: justify;
+                text-justify: inter-word;
+                padding: 0 25%;
+                margin: 1% auto 0;
+                font-family: Verdana,Arial,sans-serif;
+            }
+
+            h3 {
+                display: inline;
+                font-size: 1.2em;
+            }
+
+            p {
+                display: inline;
+                font-size: 0.8em;
+                font-weight: lighter;
+            }
+
+            hr {
+                width: 75%
+            }
+
+            table {
+                border: 0;
+                cellpadding: 0;
+                cellspace:0;
+                width:75%;
+                margin: 0 auto;
+            }
+
+            a {
+              color: #666699;
+              text-decoration: none; /* no underline */
+            }
+
+            i {
+                display: inline-block;
+            }
+
+            #inputs {
+                margin: 2.5% 10% 0 10%;
+                padding: 0 15% 0;
+            }
+
+            #anime {
+                width: 100%;
+
+            }
+
+            #cluster_option {
+                margin: 3% 0 0 0;
+
+            }
+
+            #series {
+                margin: 0 auto;
+            }
+
+            #fig01 {
+                margin: 0 auto;
+            }
+
+            #question {
+                display:inline;
+            }
+
+
+            #suplex_city {
+                margin: 0 auto;
+
+            }
+
+            #bear {
+                margin: 10% auto;
+                display: inherit;
+            }
+
+            .button_div {
+                margin: 0 10%;
+                padding: 0 15%;
+            }
+
+            button {
+                display: block;
+                width: 80%;
+                font-size: 1em;
+                margin: 2% auto;
+            }
+
+            .ui-widget {
+
+            }
+
+            .label {
+                float: left;
+                text-align: left;
+            }
+
+            .slide_num {
+                width: 1.5em;
+                float: left;
+                border:0;
+                color:#f6931f;
+                font-weight:bold;
+            }
+
+            .slide_text {
+                margin: 10px 0 -5px 0;
+                display: inline-block;
+                text-align: left;
+            }
+
+            .series_info {
+                height: 100px;
+
+            }
+
+            .tooltiptext{
+                display: none;
+            }
+
+            tr:nth-child(2n+3) {
+                background: #f0f0f5;
+            }
+
+            .table-header {
+                text-align: center;
+                font-weight: bolder;
+                font-size: larger;
+                color: #fff;
+                background: #666699;
+                font-family: Verdana,Arial,sans-serif;
+
+            }
+
+            .image_td {
+                height: 100px;
+
+            }
+
+            .series_image {
+                margin: 0 auto;
+                padding: 0 5%;
+                max-width: 90%;
+                max-height: 100%;
+            }
+
+            .title_detail {
+                font-size: large;
+                font-weight: bold;
+            }
+
+            .other_details {
+                font-size: small;
+                color: #595959;
+            }
+
+            .cluster_num {
+                width: 20%;
+            }
+
+            .cluster_detail {
+                font-size: 1.5em;
+                text-align: center;
+                color: #595959;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <h1>Anime Recommender</h1>
+
+        <hr>
+
+        <div id="intro">
+            <h3>What is this?<h3>
+            </br>
+            <p>This website recommends anime to you based on K-means clustering (k=9) of the tf-idf of the anime descriptions. Natural language processes were used to preprocess the descriptions. Just input an anime name (currently only takes the default main name as listed on MyAnimeList), select your number of recommendations, select whether you want the results to come from a single cluster or not, and click "Show me the money!" It's not perfect but some results may surprise you. To learn more about this project check out my blog.</br></br>Enjoy!</p>
+        </div>
+
+        <div id="inputs">
+            <!-- Series Input -->
+            <div class="ui-widget" id="series">
+                <label for="anime" class="label">Anime: </label>
+                <input id="anime" name="series_name" value="Ghost in the Shell">
+            </div>
+
+            <!-- Recommendations Slider -->
+            <div class="ui-widget">
+                <div class="slide_text">
+                    <label for="recommendations" class="label">Recommendations: </label>
+                    <input type="text" name="rec_num" id="rec_num" class="slide_num">
+                </div>
+                <div id="slider1"></div>
+            </div>
+
+            <!-- Single Cluster Results -->
+            <div class="ui-widget" id="cluster_option">
+                <label for="cluster_types" class="label">Get recommendations from single cluster?</label>
+                <input type="checkbox" name="cluster_types" id="cluster_types" class="cluster_check">
+            </div>
+
+        </div>
+
+        <!-- Submit Button -->
+        <div class="button_div">
+            <button type='button' name="submit_it" id='submit' onclick="clearBoxes()">Show me the money!</button>
+        </div>
+
+        <!-- Results -->
+
+        <div id="fig01"></div>
+
+        <div id="anime_list"></div>
+
+        <div id="suplex_city"></div>
+
+    </body>
+</html>
