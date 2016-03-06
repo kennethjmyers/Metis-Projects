@@ -5,12 +5,12 @@
         <title>jQuery UI Autocomplete - Remote datasource</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-        <script type="text/javascript" src="http://mpld3.github.io/js/mpld3.v0.2.js"></script>
-        <script type="text/javascript" src="http://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script type="text/javascript" src="https://mpld3.github.io/js/mpld3.v0.2.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.js"></script>
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="http://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/qtip2/2.2.1/basic/jquery.qtip.min.css">
 
         <script>
             /*** Series Input ***/
@@ -178,17 +178,28 @@
 
                 });
 
-                var $suplexcity = $('<div class="button_div"><button type="button" name="suplex_city_button" id="suplexcitybutton" onclick="suplexCity()">Take me to Suplex City</button></div>');
+                var $suplexcity = $('<div class="button_div">'+
+                                        '<button type="button" name="suplex_city_button" id="suplexcitybutton" onclick="suplexCity()">Take me to Suplex City</button>'+
+                                    '</div>'
+                                    );
                 $suplexcity.appendTo(document.getElementById('anime_list'));
 
                 $('html, body').stop(true, false).animate({
                     scrollTop: $("#anime_list").offset().top
                 }, 1500);
+
             }
 
             function suplexCity() {
-                var $suplexbear = $('<img id="bear" src="http://i.imgur.com/azeuNJ4.gif">')
-                $suplexbear.appendTo(document.getElementById('suplex_city'))
+                var $suplexbear = $('<img id="bear" src="http://i.imgur.com/azeuNJ4.gif">'+
+                                    '<div class="paragraph">'+
+                                        '<h3>For the future...<h3>'+
+                                        '</br>'+
+                                        '<p>Currently this app works with a prescraped list of data. MAL\'s API doesn\'t provide other statistics I was interested in like the score, popularity, and content rating. While there is a better, unofficial API, I was on a time crunch and and didn\'t have thime to explore it.</br>It also would have required more planning to dynamically update the models with new data, searches, etc. For now I think I may add more models to the app to explore how different models cluster the data and also add a functionality to search by the English name.</br></br>Thank you!</br></br></p>'+
+                                        '<p id="bottom_text">&copy Kenneth Myers 2016 | <a href="http://kennmyers.github.io/">Blog</a> | <a href="https://www.linkedin.com/in/kennethjmyers"><i class="fa fa-linkedin-square"></i></a> | <a href="https://github.com/kennmyers"><i class="fa fa-github-square"></i></a> | <a href="https://twitter.com/kennethjmyers"><i class="fa fa-twitter-square"></i></a> | <a href="https://www.instagram.com/kennethjmyers/"><i class="fa fa-instagram"></i></a></br></p>'+
+                                    '</div>'
+                                );
+                $suplexbear.appendTo(document.getElementById('suplex_city'));
 
                 $('html, body').stop(true, false).animate({
                     scrollTop: $("#suplex_city").offset().top
@@ -210,7 +221,7 @@
                 font-family: Verdana,Arial,sans-serif;
             }
 
-            #intro {
+            .paragraph {
                 text-align: justify;
                 text-justify: inter-word;
                 padding: 0 25%;
@@ -284,7 +295,7 @@
             }
 
             #bear {
-                margin: 10% auto;
+                margin: 10% auto 5%;
                 display: inherit;
             }
 
@@ -378,6 +389,14 @@
                 color: #595959;
             }
 
+            #bottom_text {
+                font-size: 0.8em;
+                color: #c2c2c2;
+                text-align: center;
+                margin: 0 auto 1%;
+                display:block;
+            }
+
 
         </style>
     </head>
@@ -386,10 +405,10 @@
 
         <hr>
 
-        <div id="intro">
+        <div class="paragraph">
             <h3>What is this?<h3>
             </br>
-            <p>This website recommends anime to you based on K-means clustering (k=9) of the tf-idf of the anime descriptions. Natural language processes were used to preprocess the descriptions. Just input an anime name (currently only takes the default main name as listed on MyAnimeList), select your number of recommendations, select whether you want the results to come from a single cluster or not, and click "Show me the money!" It's not perfect but some results may surprise you. To learn more about this project check out my blog.</br></br>Enjoy!</p>
+            <p>This website recommends anime to you based on K-means clustering (k=9) of the tf-idf of the anime descriptions. Natural language processes were used to preprocess the descriptions. Just input an anime name (currently only takes the default main name as listed on MyAnimeList), select your number of recommendations, select whether you want the results to come from a single cluster or not, and click "Show me the money!" It's not perfect but some results may surprise you. To learn more about this project check out <a href="http://kennmyers.github.io/kennmyers.github.io/data%20science/Metis-Fourth-Project">my blog</a>.</br></br>Enjoy!</p>
         </div>
 
         <div id="inputs">
