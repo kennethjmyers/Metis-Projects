@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Solving KenKen With Computer Vision</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/dropzone.css') }}">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/bootstrap.css') }}" >
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/bootstrap-theme.css') }}" >
+        <link rel="stylesheet" href="https://cdn.rawgit.com/fengyuanchen/cropper/v2.0.1/dist/cropper.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/app.css') }}" >
+
+
+    </head>
+    <body>
+        <h1>KenKen Solver</h1>
+
+        <hr>
+
+        <div class="paragraph">
+            <br />
+            <h3>What is this?<h3>
+            <br  />
+            <p>For my last project at Metis I decided to use computer vision to solve KenKen puzzles. Currently this application only accepts 4x4 KenKens. Simply upload a puzzle and get the solution. To learn more about this project check out <a href="http://kennmyers.github.io/kennmyers.github.io/data%20science/Metis-Fourth-Project">my blog</a>.</br></br>Enjoy!</p>
+        </div>
+
+        <div id="boxes">
+            <div id="input">
+                <div class="dropzone" id="droparea">
+                    <form action="" method="post" enctype="multipart/form-data" class="needsclick dz-clickable" id="my-awesome-dropzone">
+                        <div class="dz-message needsclick">
+                            <br />
+                            Drag and Drop Picture
+                            <br />
+                            or
+                            <br />
+                            Click to Upload
+                            <br />
+                            <br />
+                            Accepts 1 Image
+                            <br />
+                            Max 300 kb.
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Results -->
+
+            <div id="output">
+                <img id="output-img-container" src="{{url_for('static', filename='images/dummy.jpg')}}" />
+            </div>
+        </div>
+
+        <p id="bottom_text">&copy Kenneth Myers 2016 | <a href="http://kennmyers.github.io/">Blog</a> | <a href="https://www.linkedin.com/in/kennethjmyers"><i class="fa fa-linkedin-square"></i></a> | <a href="https://github.com/kennmyers"><i class="fa fa-github-square"></i></a> | <a href="https://twitter.com/kennethjmyers"><i class="fa fa-twitter-square"></i></a> | <a href="https://www.instagram.com/kennethjmyers/"><i class="fa fa-instagram"></i></a></br></p>
+
+        <script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="{{ url_for('static', filename='scripts/bootstrap.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/dropzone.js') }}"></script>
+        <script src="https://cdn.rawgit.com/fengyuanchen/cropper/v2.0.1/dist/cropper.min.js"></script>
+
+        <script src="{{ url_for('static', filename='scripts/app.js') }}"></script>
+    </body>
+</html>

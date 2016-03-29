@@ -1,0 +1,13 @@
+bower_components
+examples
+assets
+demo
+docs
+test
+/_*
+/.*
+dist/*.map
+bower.json
+gulpfile.js
+CONTRIBUTING.md
+FAQ.md
