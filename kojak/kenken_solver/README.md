@@ -18,5 +18,6 @@ You can find the final product [here](http://kenkensolver.herokuapp.com/) or at 
 * **distorted_from_artificial** : Distorted samples of the images in [base_images_artificial](base_images_artificial) made with [02_generate_dataset_artificial.ipynb](02_generate_dataset_artificial.ipynb)
 * **distorted_from_true** : Distorted samples of the images in [base_images_true](base_images_true) made with [05_generate_dataset_true.ipynb](05_generate_dataset_true.ipynb)
 * **flask_app/** : Contains all of the files necessary for the flask application.
+* **images/** : Contains images used in these MD files.
 * **presentation/** : Contains presentation material including keynote and ppt files and link to the google slides.
 * **puzzle_examples/** : Contains numerous examples of KenKen puzzles used in [04_collecting_number_examples.ipynb](04_collecting_number_examples.ipynb) to create real samples of all of the numbers and symbols.
