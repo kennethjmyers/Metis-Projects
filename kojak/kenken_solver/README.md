@@ -10,6 +10,10 @@ I decided to go with KenKen puzzles (the reason definitely wasn't because I shar
 
 You can find the final product [here](http://kenkensolver.herokuapp.com/) or at [my blog](http://kennmyers.github.io/data%20science/2016/03/29/Metis-Fifth-Project.html), where you can also read more about this project.
 
+<div align="center">
+    <img src="images/appexample.png">
+</div>
+
 ### What are these files?
 
 * **.ipynb_checkpoints/** : ipynb checkpoints
@@ -21,3 +25,21 @@ You can find the final product [here](http://kenkensolver.herokuapp.com/) or at 
 * **images/** : Contains images used in these MD files.
 * **presentation/** : Contains presentation material including keynote and ppt files and link to the google slides.
 * **puzzle_examples/** : Contains numerous examples of KenKen puzzles used in [04_collecting_number_examples.ipynb](04_collecting_number_examples.ipynb) to create real samples of all of the numbers and symbols.
+* **01_basic_image_tests.ipynb** : Preliminary tests and cage/cluster labeling.
+* **02_generate_dataset_artificial.ipynb** : Generates train and test images (distorted images) from artificial images.
+* **03_modeling_part_1.ipynb** : First attempt at modeling the artificial images using an SVM and Tensor Flow and predicting on true examples. Did not turn out well and was not used in the final product.
+* **04_collecting_number_examples.ipynb** : Used for collecting real number and symbol examples (true images) from KenKen puzzles.
+* **05_generate_dataset_true.ipynb** : Apply distortions to the true image examples.
+* **06_modeling_part_2.ipynb** : Modeling of the true images using Tensor Flow. Predictions turned out much better.
+* **07_solving_kenken_puzzle.ipynb** : Combines all of the previous techniques and includes an algorithm for solving KenKens to create a final, solved solution.
+* **README.md** : This file.
+* **Checkpoint** : Honestly not sure when this was created and not sure if it's safe to remove.
+* **cv_puzzle.txt** : Output file generated in [07_solving_kenken_puzzle.ipynb](07_solving_kenken_puzzle.ipynb) used in the solving algorithm in that same ipynb. 
+* **model_newest.ckpt** : Saved Tensor Flow Model
+* **model_newest.ckpt.meta** : Saved Tensor Flow Model
+* **puzzle.txt** : Sample puzzle file for solving algorithm
+* **puzzle2.txt** : Sample puzzle file for solving algorithm
+* **sample4x4_1.jpg** : Sample KenKen Puzzle
+* **sample4x4_2.jpg** : Sample KenKen Puzzle (don't use this one, numbers are terrible)
+* **sample4x4_3.jpg** : Sample KenKen Puzzle
+* **sample4x4_clean_for_testing.jpg** : cleaned KenKen puzzle outputed from [01_basic_image_tests.ipynb](01_basic_image_tests.ipynb) so that it only has cage outlines and numbers.
