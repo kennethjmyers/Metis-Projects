@@ -32,4 +32,4 @@ You will also need to download the [AdBlockPlus extension](https://chrome.google
 Here is a [link to my blog post](http://kennmyers.github.io/kennmyers.github.io/data%20science/Metis-Second-Project/) about my findings.
 
 
-Link to the [presentation](https://docs.google.com/presentation/d/1RMjT8VRGqEwXAiyRZpPjrFCpCl_iueCWNKNEitDFzrQ/edit?usp=sharing)
+Link to the [presentation](https://docs.google.com/presentation/d/1LYB7e1kdGuIurbkghLURA3gfZv6MLUNcuCLfptaj5U0/edit?usp=sharing)
