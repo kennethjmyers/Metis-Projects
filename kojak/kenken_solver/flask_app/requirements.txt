@@ -1,6 +1,6 @@
 Flask==1.0
 Flask-Cors==2.1.2
-Jinja2==2.7.2
+Jinja2==2.11.3
 
 PIL==1.1.7
 Pillow==8.1.1
